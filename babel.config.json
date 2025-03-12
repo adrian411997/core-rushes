@@ -1,0 +1,26 @@
+{
+  "presets": [
+    ["@babel/preset-env", { "targets": { "node": "current" } }],
+    ["@babel/preset-react", { "runtime": "automatic" }],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "useESModules": true,
+        "regenerator": false
+      }
+    ],
+    "babel-plugin-react-require"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        ["@babel/preset-env", { "targets": { "node": "current" } }],
+        "@babel/preset-react",
+        "@babel/preset-typescript"
+      ]
+    }
+  }
+}
