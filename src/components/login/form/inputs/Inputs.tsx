@@ -22,9 +22,6 @@ export const Inputs = () => {
     setIsChecked((prevState) => !prevState);
   };
 
-  const changeType = ()=>{
-
-  }
   return (
     <StyledContainer>
       <StyledTitleFormContainer>

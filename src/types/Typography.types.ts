@@ -4,5 +4,5 @@ import { MouseEventHandler } from "react";
 export type TypographyTypes = {
   as: "p" | "h1" | "h2" | "h3" | "span";
   children: React.ReactNode;
-  onClick?: MouseEventHandler<HTMLParagraphElement>
+  onClick?: MouseEventHandler<HTMLParagraphElement>;
 };
