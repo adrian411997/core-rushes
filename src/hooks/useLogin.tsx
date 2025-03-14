@@ -9,13 +9,15 @@ export const useLogin = () => {
   });
 
   const handleLogin = () => {
-    const requestBodyLogin: IUser = {
+    /*const requestBodyLogin: IUser = {
       username: credentials.username,
       password: credentials.password,
     };
+  */
   };
 
   return {
+    credentials,
     setCredentials,
     handleLogin,
   };
