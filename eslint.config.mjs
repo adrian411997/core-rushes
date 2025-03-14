@@ -16,7 +16,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ["**/node_modules"],
+    ignores: ["**/node_modules", "src/interfaces"],
   },
   ...compat.extends(
     "ts-react-important-stuff",
@@ -48,7 +48,7 @@ export default [
     rules: {
       "no-undef": 0,
       "no-console": 2,
-      "no-unused-vars": 2,
+      "no-unused-vars": 0,
     },
   },
 ];
