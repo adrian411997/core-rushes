@@ -16,4 +16,15 @@ describe("Inputs", () => {
     const switchButton = screen.getByTestId("switch-button");
     fireEvent.click(switchButton);
   });
+  it("Should navigate to /register when the button is clicked", () => {
+    render(
+      <BrowserRouter>
+        <Inputs />
+      </BrowserRouter>
+    );
+    const registerButton = screen.getByText("Sign up");
+    fireEvent.click(registerButton);
+
+    expect(window.location.pathname).toBe("/register")
+  });
 });

@@ -10,7 +10,9 @@ export const StyledContainer = styled.div`
 export const StyledInput = styled.input`
   border: 0.5px solid rgb(74, 85, 104);
   border-radius: 0.9rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem;
+  background-color:rgb(18,21,52);
+  color:white;
 `;
 
 export const StyledInputContainer = styled.div`
@@ -42,3 +44,15 @@ export const StyleButton = styled.button`
   color: white;
   border: none;
 `;
+
+export const StyledContainerSignUp = styled.div`
+  text-align:center;
+
+  & > p> span{
+    font-weight: bold;
+  }
+
+  & > p> span:hover{
+    cursor: pointer;
+  }
+`
