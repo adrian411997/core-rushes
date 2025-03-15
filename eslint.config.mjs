@@ -48,7 +48,7 @@ export default [
     rules: {
       "no-undef": 0,
       "no-console": 2,
-      "no-unused-vars": 0,
+      "no-unused-vars": 2,
     },
   },
 ];
