@@ -1,14 +1,32 @@
-import { StyledContainer } from "./Portrait.styles";
-import { Typography } from "../../../utils/components/Typography/Typography";
+import { useEffect, useState } from "react";
+
+import background from "../../../assets/background.jpg";
+import background2 from "../../../assets/background2.jpg";
+import background3 from "../../../assets/background3.jpg";
+
+import { CarouselWrapper, Slide, SlideTrack } from "./Portrait.styles";
 
 export const Portrait = () => {
-  const TITLE = "INSPIRED BY THE FUTURE"
-  const SUBTITLE = "THE VISION DASHBOARD"
+  const images = [background, background2, background3];
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % 3);
+    }, 3000); 
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <StyledContainer>
-      <Typography as="h3">{TITLE}</Typography>
-      <Typography as="h2">{SUBTITLE}</Typography>
-    </StyledContainer>
+    <CarouselWrapper>
+      <SlideTrack data-testid="slide-track" currentIndex={currentIndex}>
+        {images.map((image, index) => (
+          <Slide key={index}>
+            <img src={image} alt="portrait" />
+          </Slide>
+        ))}
+      </SlideTrack>
+    </CarouselWrapper>
   );
 };
