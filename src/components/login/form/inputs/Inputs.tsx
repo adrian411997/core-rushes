@@ -11,17 +11,30 @@ import {
   StyledContainerSignUp,
   StyleButton,
 } from "./Inputs.styles";
+import { useLogin } from "../../../../hooks/useLogin";
+import { CustomSpinner } from "../../../../utils/components/spinner/Spinner";
 
 export const Inputs = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
-  const handleNavigate = ()=>{
-    navigate("/register")
-  }
+  const { setCredentials, handleLogin, loading,error,isEmpty} = useLogin();
+
+  const handleNavigate = () => {
+    navigate("/register");
+  };
   const handleSwitchChange = () => {
     setIsChecked((prevState) => !prevState);
   };
-
+  const handleClickLogin = () => {
+    handleLogin();
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCredentials((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   return (
     <StyledContainer>
       <StyledTitleFormContainer>
@@ -31,22 +44,32 @@ export const Inputs = () => {
       <StyledInputContainer>
         <Typography as="p">Email</Typography>
         <StyledInput
+          data-testid="email-input"
           placeholder="Enter your email"
           type="email"
           name="username"
+          onChange={handleChange}
         />
         <Typography as="p">Password</Typography>
         <StyledInput
           placeholder="Your password"
+          data-testid="password-input"
           type="password"
           name="password"
+          onChange={handleChange}
         />
       </StyledInputContainer>
       <Switch isChecked={isChecked} onChange={handleSwitchChange} />
-      <StyleButton>SIGN IN</StyleButton>
+      <StyleButton disabled={isEmpty} onClick={handleClickLogin} data-testid="sign-in-button">
+        {loading ? <CustomSpinner /> : "SIGN IN"}
+      </StyleButton>
+      {error ? <Typography as="span"  >{error}</Typography>: ""}
       <StyledContainerSignUp>
         <Typography as="p">
-          Dont have an account? <Typography onClick={handleNavigate} as="span">Sign up</Typography>
+          Dont have an account?
+          <Typography onClick={handleNavigate} as="span">
+            Sign up
+          </Typography>
         </Typography>
       </StyledContainerSignUp>
     </StyledContainer>
