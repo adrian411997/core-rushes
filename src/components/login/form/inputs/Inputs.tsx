@@ -17,13 +17,14 @@ import { CustomSpinner } from "../../../../utils/components/spinner/Spinner";
 export const Inputs = () => {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
-  const { setCredentials, handleLogin, loading,error,isEmpty} = useLogin();
+  const { setCredentials, handleLogin, loading,error,isEmpty,setActiveRemember} = useLogin();
 
   const handleNavigate = () => {
     navigate("/register");
   };
   const handleSwitchChange = () => {
     setIsChecked((prevState) => !prevState);
+    setActiveRemember((prevState) => !prevState)
   };
   const handleClickLogin = () => {
     handleLogin();

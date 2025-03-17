@@ -13,8 +13,8 @@ export const useLogin = () => {
     username: "",
     password: "",
   });
-
-  const isEmpty = !credentials.password || !credentials.username
+  const [activeRemember, setActiveRemember] = useState<boolean>(false);
+  const isEmpty = !credentials.password || !credentials.username;
   const initStates = () => {
     setLoading(false);
     setError("");
@@ -28,6 +28,7 @@ export const useLogin = () => {
       initStates();
       const corporationId = await loginInService(requestBodyLogin);
       setLocalStorage("auth", corporationId);
+      if (activeRemember) setLocalStorage("credentials", credentials);
       navigate("/");
     } catch {
       setError(ERROR_LOGIN);
@@ -43,6 +44,7 @@ export const useLogin = () => {
     handleLogin,
     loading,
     error,
-    isEmpty
+    isEmpty,
+    setActiveRemember,
   };
 };

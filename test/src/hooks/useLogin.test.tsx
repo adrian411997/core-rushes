@@ -2,9 +2,8 @@ import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { useLogin } from "../../../src/hooks/useLogin";
 import { loginInService } from "../../../src/services/Login";
-import { setLocalStorage } from "../../../src/utils/functions/localStorage";
+import { getLocalStorage } from "../../../src/utils/functions/localStorage";
 import { useNavigate } from "react-router-dom";
-import { ERROR_LOGIN } from "../../../src/common/Error";
 
 jest.mock("../../../src/services/Login", () => ({
   loginInService: jest.fn(),
@@ -12,6 +11,7 @@ jest.mock("../../../src/services/Login", () => ({
 
 jest.mock("../../../src/utils/functions/localStorage", () => ({
   setLocalStorage: jest.fn(),
+  getLocalStorage:jest.fn(),
 }));
 
 jest.mock("react-router-dom", () => ({
@@ -20,13 +20,14 @@ jest.mock("react-router-dom", () => ({
 
 // Componente de prueba
 const TestComponent = () => {
-  const { setCredentials, handleLogin, loading, error,isEmpty } = useLogin();
+  const { setCredentials, handleLogin, loading, error,isEmpty, setActiveRemember} = useLogin();
 
   return (
     <div>
       <button disabled={isEmpty }  data-testid="login-button" onClick={handleLogin}>
         Login
       </button>
+      <button data-testid="remember-button" onClick={()=>setActiveRemember(true)}>Remember</button>
       <input
         data-testid="username-input"
         onChange={(e) =>
@@ -103,6 +104,23 @@ describe("useLogin Hook (con componente de prueba)", () => {
 
     fireEvent.click(screen.getByTestId("login-button"));
 
-    // Verifica que el indicador de carga esté visible
+  });
+  it("should save setLocalStorage when remember button is clicked and login", async () => {
+    (loginInService as jest.Mock).mockResolvedValue("mockCorporationId");
+
+    render(<TestComponent />);
+
+    fireEvent.click(screen.getByTestId("remember-button"));
+    fireEvent.change(screen.getByTestId("username-input"), {
+      target: { value: "testUser" },
+    });
+    fireEvent.change(screen.getByTestId("password-input"), {
+      target: { value: "testPass" },
+    });
+
+    fireEvent.click(screen.getByTestId("login-button"));
+    const credentials = getLocalStorage("credentials")
+
+    expect(credentials).not.toBeNull();
   });
 });

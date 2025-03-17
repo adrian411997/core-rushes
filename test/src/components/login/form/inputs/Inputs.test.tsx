@@ -8,19 +8,11 @@ jest.mock("../../../../../../src/hooks/useLogin", () => ({
   useLogin: jest.fn(),
 }));
 
-const renderComponent = () => {
-  return render(
-    <BrowserRouter>
-      <Inputs />
-    </BrowserRouter>
-  );
-};
 
 describe("Inputs", () => {
   let setCredentials, handleLogin;
-
+  const setActiveRemember = jest.fn();
   beforeEach(() => {
-    // Mock de las funciones del hook
     setCredentials = jest.fn();
     handleLogin = jest.fn();
     (useLogin as jest.Mock).mockReturnValue({
@@ -29,6 +21,7 @@ describe("Inputs", () => {
       loading: false,
       error: "",
       isEmpty: false,
+      setActiveRemember:setActiveRemember
     });
 
 
@@ -43,8 +36,7 @@ describe("Inputs", () => {
     const switchButton = screen.getByTestId("switch-button");
     fireEvent.click(switchButton);
 
-    // Aunque no hay un cambio visible en el DOM, se valida el evento
-    expect(switchButton).toBeInTheDocument(); // Comprobamos que el switch está presente
+    expect(switchButton).toBeInTheDocument();
   });
 
   it("debería navegar a /register al hacer clic en el texto Sign up", () => {
