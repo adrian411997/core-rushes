@@ -1,0 +1,1 @@
+export const ERROR_LOGIN = "Ocurrio un error inesperado. Intentelo mas tarde"
