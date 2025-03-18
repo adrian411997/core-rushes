@@ -17,20 +17,28 @@ import { CustomSpinner } from "../../../../utils/components/spinner/Spinner";
 export const Inputs = () => {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
-  const { setCredentials, handleLogin, loading,error,isEmpty,setActiveRemember} = useLogin();
+  const {
+    setCredentials,
+    handleLogin,
+    loading,
+    error,
+    isEmpty,
+    setActiveRemember,
+  } = useLogin();
 
   const handleNavigate = () => {
     navigate("/register");
   };
   const handleSwitchChange = () => {
     setIsChecked((prevState) => !prevState);
-    setActiveRemember((prevState) => !prevState)
+    setActiveRemember((prevState) => !prevState);
   };
   const handleClickLogin = () => {
     handleLogin();
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setCredentials((prev) => ({
       ...prev,
       [name]: value,
@@ -61,10 +69,14 @@ export const Inputs = () => {
         />
       </StyledInputContainer>
       <Switch isChecked={isChecked} onChange={handleSwitchChange} />
-      <StyleButton disabled={isEmpty} onClick={handleClickLogin} data-testid="sign-in-button">
+      <StyleButton
+        disabled={isEmpty}
+        onClick={handleClickLogin}
+        data-testid="sign-in-button"
+      >
         {loading ? <CustomSpinner /> : "SIGN IN"}
       </StyleButton>
-      {error ? <Typography as="span"  >{error}</Typography>: ""}
+      {error ? <Typography as="span">{error}</Typography> : ""}
       <StyledContainerSignUp>
         <Typography as="p">
           Dont have an account?
