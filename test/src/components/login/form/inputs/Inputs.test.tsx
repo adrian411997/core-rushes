@@ -56,7 +56,7 @@ describe("Inputs", () => {
         <Inputs />
       </BrowserRouter>
     );
-    const emailInput = screen.getByTestId("email-input");
+    const emailInput = screen.getByTestId("company-name-input");
     const passwordInput = screen.getByTestId("password-input");
 
     fireEvent.change(emailInput, {

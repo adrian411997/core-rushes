@@ -6,7 +6,6 @@ import { getLocalStorage } from "../utils/functions/localStorage";
 export const useAccess = () => {
   const navigate = useNavigate();
   const id = getLocalStorage("auth");
-  console.log(id);
 
   useEffect(() => {
     if (!id) {

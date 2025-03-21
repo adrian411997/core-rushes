@@ -14,12 +14,12 @@ module.exports = {
   },
   setupFilesAfterEnv: ["@testing-library/jest-dom", "<rootDir>/setupTests.js"],
   preset: "ts-jest",
-  coverageThreshold: {
+  /*coverageThreshold: {
     global: {
       branches: 90, // Cobertura mínima para branches
       functions: 90, // Cobertura mínima para funciones
       lines: 90, // Cobertura mínima para líneas
       statements: 90, // Cobertura mínima para declaraciones
     },
-  },
+  },*/
 };

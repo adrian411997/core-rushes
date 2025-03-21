@@ -5,7 +5,7 @@ import {
   SwitchLabel,
   StyledContainer,
 } from "./Switch.styles";
-import { Typography } from "../../../../utils/components/Typography/Typography";
+import { Typography } from "../Typography/Typography";
 
 interface IProps {
   isChecked: boolean;
