@@ -2,10 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "../../../../utils/components/Typography/Typography";
 import { TITLE_FORM_LOGIN } from "../../../../common/Constant";
-import { Switch } from "../switch/Switch";
+import { Switch } from "../../../../utils/components/switch/Switch";
 import {
   StyledContainer,
-  StyledInput,
   StyledTitleFormContainer,
   StyledInputContainer,
   StyledContainerSignUp,
@@ -13,7 +12,7 @@ import {
 } from "./Inputs.styles";
 import { useLogin } from "../../../../hooks/useLogin";
 import { CustomSpinner } from "../../../../utils/components/spinner/Spinner";
-
+import { CustomInputs } from "../../../../utils/components/inputs/CustomInputs";
 export const Inputs = () => {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
@@ -51,21 +50,21 @@ export const Inputs = () => {
         <Typography as="p">Enter your email and password to sign in</Typography>
       </StyledTitleFormContainer>
       <StyledInputContainer>
-        <Typography as="p">Email</Typography>
-        <StyledInput
-          data-testid="email-input"
-          placeholder="Enter your email"
-          type="email"
-          name="username"
-          onChange={handleChange}
+        <CustomInputs
+          dataTestid="company-name-input"
+          label={"Company Name"}
+          name="companyName"
+          type="string"
+          onchange={handleChange}
+          placeholder="Enter your Company Name"
         />
-        <Typography as="p">Password</Typography>
-        <StyledInput
-          placeholder="Your password"
-          data-testid="password-input"
-          type="password"
+        <CustomInputs
+          dataTestid="password-input"
+          label={"Password"}
           name="password"
-          onChange={handleChange}
+          type="password"
+          onchange={handleChange}
+          placeholder="Your password"
         />
       </StyledInputContainer>
       <Switch isChecked={isChecked} onChange={handleSwitchChange} />
