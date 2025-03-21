@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useRegister } from "../../../hooks/useRegister";
 import { CustomInputs } from "../../../utils/components/inputs/CustomInputs";
 import { Switch } from "../../../utils/components/switch/Switch";
