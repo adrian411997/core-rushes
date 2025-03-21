@@ -12,37 +12,33 @@ export const useRulesPassword = () => {
   const [passed, setPassed] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  const updateRule = useCallback((code: string, check: boolean) => {
-    setRules((prevRules) =>
-      prevRules.map((rule) =>
-        rule.code === code ? { ...rule, isPassed: check } : rule
-      )
-    );
-  }, []);
+  useEffect(() => {
+    const updatedRules = ListCheck.map((rule) => {
+      if (rule.code === "length") {
+        return { ...rule, isPassed: password.length > LENGTH_PASSWORD_RULE };
+      }
+      if (rule.code === "alphanumeric") {
+        return { ...rule, isPassed: /[a-zA-Z]/.test(password) && /[0-9]/.test(password) };
+      }
+      if (rule.code === "symbol") {
+        return { ...rule, isPassed: /[!@#$%^&*(),.?":{}|<>]/.test(password) };
+      }
+      return rule;
+    });
 
-  const validateRules = useCallback(() => {
-    updateRule("length", password.length > LENGTH_PASSWORD_RULE);
-    updateRule("alphanumeric", /[a-zA-Z]/.test(password) && /[0-9]/.test(password));
-    updateRule("symbol", /[!@#$%^&*(),.?":{}|<>]/.test(password));
+    setRules(updatedRules);
 
-    setPassed(rules.every((rule) => rule.isPassed));
-  }, [password, rules, updateRule]);
+    const allPassed = updatedRules.every((rule) => rule.isPassed);
+    setPassed(allPassed);
+  }, [password]); 
 
-  const validatePasswordMatch = useCallback(() => {
+  useEffect(() => {
     if (confirmPassword !== password) {
       setError("Passwords do not match");
     } else {
       setError("");
     }
   }, [confirmPassword, password]);
-
-  useEffect(() => {
-    validateRules();
-  }, [password, validateRules]);
-
-  useEffect(() => {
-    validatePasswordMatch();
-  }, [confirmPassword, validatePasswordMatch]);
 
   return {
     rules,
