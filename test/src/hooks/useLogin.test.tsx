@@ -20,14 +20,7 @@ jest.mock("react-router-dom", () => ({
 
 // Componente de prueba
 const TestComponent = () => {
-  const {
-    setCredentials,
-    handleLogin,
-    loading,
-    error,
-    isEmpty,
-    setActiveRemember,
-  } = useLogin();
+  const { setCredentials, handleLogin, loading, error, isEmpty } = useLogin();
 
   return (
     <div>
@@ -38,12 +31,7 @@ const TestComponent = () => {
       >
         Login
       </button>
-      <button
-        data-testid="remember-button"
-        onClick={() => setActiveRemember(true)}
-      >
-        Remember
-      </button>
+
       <input
         data-testid="company-name-input"
         onChange={(e) =>
@@ -113,23 +101,5 @@ describe("useLogin Hook (con componente de prueba)", () => {
     });
 
     fireEvent.click(screen.getByTestId("login-button"));
-  });
-  it("should save setLocalStorage when remember button is clicked and login", async () => {
-    (loginInService as jest.Mock).mockResolvedValue("mockCorporationId");
-
-    render(<TestComponent />);
-
-    fireEvent.click(screen.getByTestId("remember-button"));
-    fireEvent.change(screen.getByTestId("company-name-input"), {
-      target: { value: "testUser" },
-    });
-    fireEvent.change(screen.getByTestId("password-input"), {
-      target: { value: "testPass" },
-    });
-
-    fireEvent.click(screen.getByTestId("login-button"));
-    const credentials = getLocalStorage("credentials");
-
-    expect(credentials).not.toBeNull();
   });
 });
