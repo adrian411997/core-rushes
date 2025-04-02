@@ -27,17 +27,7 @@ describe("Inputs", () => {
 
   });
 
-  it("debería cambiar el estado al hacer clic en el switch", () => {
-    render(
-      <BrowserRouter>
-        <Inputs />
-      </BrowserRouter>
-    );
-    const switchButton = screen.getByTestId("switch-button");
-    fireEvent.click(switchButton);
-
-    expect(switchButton).toBeInTheDocument();
-  });
+ 
 
   it("debería navegar a /register al hacer clic en el texto Sign up", () => {
     render(

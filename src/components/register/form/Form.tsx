@@ -1,7 +1,5 @@
-import {  useState } from "react";
 import { useRegister } from "../../../hooks/useRegister";
 import { CustomInputs } from "../../../utils/components/inputs/CustomInputs";
-import { Switch } from "../../../utils/components/switch/Switch";
 import {
   StyleButton,
   StyledContainer,
@@ -18,40 +16,45 @@ export const Form = () => {
   const navigate = useNavigate();
 
   const {
-    passed,
-    rules,
-    setPassword,
-    error: errorConfirmPassword,
-    setConfirmPassword,
-  } = useRulesPassword();
-  const [isChecked, setIsChecked] = useState<boolean>(false);
-  const {
     setCredentials,
     loading,
     error,
     handleRegister,
     isEmpty,
-    setActiveRemember,
+    credentials,
   } = useRegister();
+
+  const {
+    passed,
+    rules,
+    error: errorConfirmPassword,
+    setConfirmPassword,
+    password,
+    isConfirmPasswordPass,
+  } = useRulesPassword(credentials.password);
   const handleNavigate = () => {
     navigate("/login");
   };
-  const handleSwitchChange = () => {
-    setIsChecked((prevState) => !prevState);
-    setActiveRemember((prevState) => !prevState);
-  };
+
   const handleClickRegister = () => {
     handleRegister();
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === "confirm-password") setConfirmPassword(value);
-    if (name === "password") setPassword(value);
-    setCredentials((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleInputChange = ({
+    target: { name, value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setCredentials((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleInputConfirmPassword = ({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(value);
+  };
+
+  const isButtonDisabled = isEmpty || !passed || !isConfirmPasswordPass;
+  console.log(isButtonDisabled);
+  console.log(isEmpty, !passed, !isConfirmPasswordPass);
+
   return (
     <StyledContainer>
       <CustomInputs
@@ -60,20 +63,23 @@ export const Form = () => {
         name="companyName"
         placeholder="Enter yout Company Name"
         type="string"
-        onchange={handleChange}
+        onchange={handleInputChange}
       />
       <PasswordInput
-        handleChange={handleChange}
+        handleChange={handleInputChange}
         listRules={rules}
         passed={passed}
+        password={password}
       />
 
       {passed && (
-        <ConfirmPassword onChange={handleChange} error={errorConfirmPassword} />
+        <ConfirmPassword
+          onChange={handleInputConfirmPassword}
+          error={errorConfirmPassword}
+        />
       )}
-      <Switch isChecked={isChecked} onChange={handleSwitchChange} />
       <StyleButton
-        disabled={isEmpty || !passed || !!errorConfirmPassword}
+        disabled={isButtonDisabled}
         onClick={handleClickRegister}
         data-testid="sign-in-button"
       >

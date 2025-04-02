@@ -13,7 +13,6 @@ export const useRegister = () => {
     companyName: "",
     password: "",
   });
-  const [activeRemember, setActiveRemember] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
 
   const handleRegister = useCallback(async () => {
@@ -21,25 +20,25 @@ export const useRegister = () => {
     setLoading(true);
     try {
       const corporationId = await RegisterService(credentials);
-      setLocalStorage("auth", corporationId);
+      console.log(corporationId);
 
-      if (activeRemember) {
-        setLocalStorage("credentials", credentials);
-      }
-      navigate("/");
+      setLocalStorage("auth", corporationId[0]);
+
+      navigate("/login");
     } catch (error) {
-      console.error("Error durante el registro:", error);
       setError(ERROR_LOGIN);
     } finally {
       setLoading(false);
     }
-  }, [credentials, activeRemember, navigate]);
+  }, [credentials, navigate]);
 
   useEffect(() => {
     const allFieldsFilled = Object.values(credentials).every(
       (value) => value.trim() !== ""
     );
     setIsEmpty(!allFieldsFilled);
+    console.log(credentials);
+    
   }, [credentials]);
 
   return {
@@ -47,7 +46,7 @@ export const useRegister = () => {
     error,
     setCredentials,
     handleRegister,
-    setActiveRemember,
     isEmpty,
+    credentials
   };
 };
