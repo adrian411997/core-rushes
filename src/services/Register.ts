@@ -7,5 +7,5 @@ export const RegisterService = async (data: IUser) => {
     `${URL_BACKEND}${URL_BACKEMD_REGISTER}`,
     data
   );
-  return response.data;
+  return response.response;
 };

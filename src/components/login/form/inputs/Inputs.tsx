@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "../../../../utils/components/Typography/Typography";
 import { TITLE_FORM_LOGIN } from "../../../../common/Constant";
-import { Switch } from "../../../../utils/components/switch/Switch";
 import {
   StyledContainer,
   StyledTitleFormContainer,
@@ -15,22 +13,16 @@ import { CustomSpinner } from "../../../../utils/components/spinner/Spinner";
 import { CustomInputs } from "../../../../utils/components/inputs/CustomInputs";
 export const Inputs = () => {
   const navigate = useNavigate();
-  const [isChecked, setIsChecked] = useState(false);
   const {
     setCredentials,
     handleLogin,
     loading,
     error,
     isEmpty,
-    setActiveRemember,
   } = useLogin();
 
   const handleNavigate = () => {
     navigate("/register");
-  };
-  const handleSwitchChange = () => {
-    setIsChecked((prevState) => !prevState);
-    setActiveRemember((prevState) => !prevState);
   };
   const handleClickLogin = () => {
     handleLogin();
@@ -67,7 +59,6 @@ export const Inputs = () => {
           placeholder="Your password"
         />
       </StyledInputContainer>
-      <Switch isChecked={isChecked} onChange={handleSwitchChange} />
       <StyleButton
         disabled={isEmpty}
         onClick={handleClickLogin}

@@ -8,10 +8,11 @@ import { IRulesCheck } from "./utils/ListChecks";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; interface propsInterface {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   listRules: IRulesCheck[],
-  passed:boolean
+  passed:boolean,
+  password:string;
 }
 
-export const PasswordInput = ({ handleChange,listRules,passed }: propsInterface) => {
+export const PasswordInput = ({ handleChange,listRules,passed,password }: propsInterface) => {
   const [visible,setVisible] = useState<boolean>(false)
   const renderIcon = (passed: boolean) => {
     return passed ? <FaCheck color="green" /> : <ImCross color="red" />;
@@ -19,6 +20,7 @@ export const PasswordInput = ({ handleChange,listRules,passed }: propsInterface)
   const handleVisible = () =>{
     setVisible((prevState) => !prevState)
   }
+  const canShowError = password.length > 0
   return (
     <StyledContainer isPassed={passed}>
       <CustomInputs
@@ -32,7 +34,7 @@ export const PasswordInput = ({ handleChange,listRules,passed }: propsInterface)
       <IconButton onClick={handleVisible} >
         {visible ?<FaEye/> : <FaEyeSlash/> }
       </IconButton>
-      {listRules.map((check) => (
+      {canShowError && listRules.map((check) => (
         <RulesPassword passed={ check.isPassed} Icon={renderIcon(check.isPassed)} rule={check.rule} />
       ))}
     
